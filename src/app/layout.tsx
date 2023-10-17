@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '~/components/providers/theme-provider'
-
-const inter = Inter({ subsets: ['latin'] })
+import { sans } from './fonts'
 
 export const metadata: Metadata = {
   title: {
@@ -19,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`antialiased ${inter.className}`}>
+      <body className={`antialiased ${sans.className}`}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
