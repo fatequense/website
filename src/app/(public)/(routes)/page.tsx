@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { PersonIcon } from '@radix-ui/react-icons'
 
 import { Button } from '~/components/ui/button'
+import { ArrowRight } from 'lucide-react'
 
 export default function LandingPage() {
   return (
@@ -14,7 +14,8 @@ export default function LandingPage() {
       </h1>
       <Button className="w-fit" asChild>
         <Link href="/login">
-          <PersonIcon className="w-4 h-4 mr-2" /> Entrar como estudante
+          Entrar como estudante
+          <ArrowRight className="w-4 h-4 ml-2" />
         </Link>
       </Button>
     </main>
