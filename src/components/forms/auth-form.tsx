@@ -1,6 +1,7 @@
 'use client'
 
-import { z } from 'zod'
+import { useState } from 'react'
+import { signIn } from 'next-auth/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
@@ -15,27 +16,44 @@ import {
 } from '../ui/form'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
-
-const formSchema = z.object({
-  username: z
-    .string({ required_error: 'O usuário é obrigatório' })
-    .length(11, 'A usuário deve conter 11 caracteres'),
-  password: z
-    .string({ required_error: 'A senha é obrigatória' })
-    .min(1, 'A senha deve ser preenchida'),
-})
+import { Auth, authSchema } from '~/lib/validations/auth'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { toast } from 'sonner'
+import { Loader } from 'lucide-react'
 
 export function AuthForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: '',
-      password: '',
-    },
+  const [loading, setLoading] = useState(false)
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
+  const form = useForm<Auth>({
+    resolver: zodResolver(authSchema),
   })
 
-  function handleSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+  async function handleSubmit(data: Auth) {
+    setLoading(true)
+
+    try {
+      const signInResult = await signIn('credentials', {
+        ...data,
+        redirect: false,
+        callbackUrl: searchParams?.get('from') || '/aluno',
+      })
+
+      if (!signInResult?.ok) {
+        toast.error('Alguma coisa deu errado!', {
+          description: 'Não foi possível realizar o login. Tente novamente',
+        })
+      } else {
+        router.replace(searchParams?.get('from') || '/aluno')
+      }
+    } catch {
+      toast.error('Alguma coisa deu errado!', {
+        description: 'Não foi possível realizar o login. Tente novamente',
+      })
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -72,8 +90,9 @@ export function AuthForm() {
           )}
         />
 
-        <Button className="w-full mt-6">
-          <span>Entrar com o SIGA</span>
+        <Button className="w-full mt-6" disabled={loading}>
+          {loading && <Loader className="w-4 h-4 animate-spin" />}
+          {!loading && <span>Entrar com o SIGA</span>}
         </Button>
       </form>
     </Form>
