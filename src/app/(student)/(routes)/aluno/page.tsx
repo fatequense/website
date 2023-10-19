@@ -1,5 +1,8 @@
+'use client'
+
 import { CubeIcon, PlusIcon } from '@radix-ui/react-icons'
 import { CheckCheck, Flame, TrendingUp } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
@@ -14,9 +17,13 @@ const todayClasses = [
 ]
 
 export default function StudentHome() {
+  const { data } = useSession()
+
   return (
     <div className="h-full">
-      <h1 className="text-2xl font-bold">Bem vindo, Caio Vinícius!</h1>
+      <h1 className="text-2xl font-bold">
+        Bem vindo, {data?.user.name.split(' ', 2).join(' ')}!
+      </h1>
       <div className="grid grid-cols-4 grid-rows-[min-content_min-content_min-content] gap-4 pt-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
