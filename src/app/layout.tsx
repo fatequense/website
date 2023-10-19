@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { Toaster } from 'sonner'
 import './globals.css'
-import { ThemeProvider } from '~/components/providers/theme-provider'
 import { sans } from './fonts'
+import { Providers } from '../components/providers'
 
 export const metadata: Metadata = {
   title: {
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`antialiased ${sans.className}`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <Providers>{children}</Providers>
         <Toaster />
       </body>
     </html>
