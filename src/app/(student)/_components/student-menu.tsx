@@ -12,8 +12,11 @@ import {
   Sheet,
 } from '~/components/ui/sheet'
 import { UserAvatar } from '~/components/user-avatar'
+import { useSession } from 'next-auth/react'
 
 export function StudentMenu() {
+  const { data } = useSession()
+
   return (
     <Sheet>
       <SheetTrigger>
@@ -24,9 +27,9 @@ export function StudentMenu() {
           <UserAvatar />
 
           <div>
-            <p className="text-sm line-clamp-1">Caio Vinícius Camargo Silva</p>
+            <p className="text-sm line-clamp-1">{data?.user.name}</p>
             <span className="text-xs text-muted-foreground line-clamp-1">
-              caio.silva169@fatec.sp.gov.br
+              {data?.user.email}
             </span>
           </div>
         </SheetHeader>
