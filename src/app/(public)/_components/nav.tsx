@@ -10,7 +10,7 @@ export function Nav() {
       <span className="font-bold">Fatequense</span>
 
       <div className="space-x-2">
-        <Button variant="link" asChild>
+        <Button asChild>
           <Link href="/login">Entrar</Link>
         </Button>
 
