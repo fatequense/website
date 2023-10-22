@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo } from 'react'
 
 import {
@@ -8,17 +10,13 @@ import {
   TableCell,
   Table,
 } from '~/components/ui/table'
-import { partialGrades } from './temp'
-
-function formatDate(date: string) {
-  return new Date(date).toLocaleDateString('pt-BR', {
-    dateStyle: 'short',
-  })
-}
+import { usePartialGrades } from '~/hooks/use-partial-grade'
 
 export default function GradesPage() {
+  const { data: partialGrades } = usePartialGrades()
+
   const _partialGrades = useMemo(() => {
-    return partialGrades.map((grade) => {
+    return partialGrades?.map((grade) => {
       if (grade.examsDates.length > 0)
         return {
           ...grade,
@@ -32,7 +30,7 @@ export default function GradesPage() {
         examsDates: [null, null, null],
       }
     })
-  }, [])
+  }, [partialGrades])
 
   return (
     <div className="grid grid-cols-4 grid-rows-[repeat(2,min-content)] gap-4">
@@ -50,7 +48,7 @@ export default function GradesPage() {
           </TableHeader>
 
           <TableBody>
-            {_partialGrades.map((grade, idx) => (
+            {_partialGrades?.map((grade, idx) => (
               <TableRow key={`grades-${idx}`}>
                 <TableCell>{grade.cod}</TableCell>
                 <TableCell>{grade.disciplineName}</TableCell>

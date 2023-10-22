@@ -1,6 +1,5 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
 import { Button } from '~/components/ui/button'
 import {
   Card,
@@ -11,9 +10,10 @@ import {
   CardTitle,
 } from '~/components/ui/card'
 import { Input } from '~/components/ui/input'
+import { useProfile } from '~/hooks/use-profile'
 
 export default function OptionsProfile() {
-  const { data } = useSession()
+  const { data: profile } = useProfile()
 
   return (
     <div className="flex-1 space-y-3">
@@ -34,7 +34,7 @@ export default function OptionsProfile() {
         </CardHeader>
         <CardContent>
           <Input
-            defaultValue={data?.user.picture}
+            defaultValue={profile?.photoUrl}
             placeholder="ex. https://github.com/usuario.png"
           />
         </CardContent>
@@ -49,7 +49,7 @@ export default function OptionsProfile() {
         </CardHeader>
         <CardContent>
           <Input
-            defaultValue={data?.user.ra}
+            defaultValue={profile?.ra}
             readOnly
             className="text-muted-foreground"
           />
@@ -64,7 +64,7 @@ export default function OptionsProfile() {
         </CardHeader>
         <CardContent>
           <Input
-            defaultValue={data?.user.email}
+            defaultValue={profile?.institutionalEmail}
             readOnly
             className="text-muted-foreground"
           />

@@ -12,10 +12,11 @@ import {
   Sheet,
 } from '~/components/ui/sheet'
 import { UserAvatar } from '~/components/user-avatar'
-import { useSession } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
+import { useProfile } from '~/hooks/use-profile'
 
 export function StudentMenu() {
-  const { data } = useSession()
+  const { data: profile } = useProfile()
 
   return (
     <Sheet>
@@ -27,16 +28,20 @@ export function StudentMenu() {
           <UserAvatar />
 
           <div>
-            <p className="text-sm line-clamp-1">{data?.user.name}</p>
+            <p className="text-sm line-clamp-1">{profile?.name}</p>
             <span className="text-xs text-muted-foreground line-clamp-1">
-              {data?.user.email}
+              {profile?.institutionalEmail}
             </span>
           </div>
         </SheetHeader>
 
         <div className="h-full mt-4 space-y-2">
-          <Button variant="ghost" className="w-full justify-start" asChild>
-            <Link href="/aluno/perfil">
+          <Button
+            variant="ghost"
+            className="w-full justify-start text-muted-foreground pointer-events-none"
+            asChild
+          >
+            <Link href="#">
               <User className="w-4 h-4 mr-2" />
               <span>Perfil</span>
             </Link>
@@ -51,10 +56,14 @@ export function StudentMenu() {
           <Separator />
 
           <Button variant="ghost" className="w-full justify-start" asChild>
-            <Link href="/aluno/opcoes">
+            <a
+              href="https://siga.cps.sp.gov.br/ALUNO/login.aspx"
+              target="_blank"
+              rel="noreferrer"
+            >
               <Globe className="w-4 h-4 mr-2" />
               <span>SIGA</span>
-            </Link>
+            </a>
           </Button>
 
           <Separator />
@@ -85,6 +94,9 @@ export function StudentMenu() {
           <Button
             variant="destructive"
             className="w-full justify-start mt-auto"
+            onClick={() => {
+              signOut({ callbackUrl: `${window.location.origin}/login` })
+            }}
           >
             <LogOut className="w-4 h-4 mr-2" />
             <span>Sair</span>

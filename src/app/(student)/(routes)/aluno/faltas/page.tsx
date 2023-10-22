@@ -1,5 +1,7 @@
 'use client'
 
+import { useMemo } from 'react'
+
 import {
   Table,
   TableBody,
@@ -8,25 +10,26 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/ui/table'
-import { partialAbsences } from './temp'
-import { useMemo } from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card'
+import { usePartialAbsences } from '~/hooks/use-absences'
 
 export default function AbsencesPage() {
+  const { data: partialAbsences } = usePartialAbsences()
+
   const totalAbsences = useMemo(() => {
-    return partialAbsences.reduce(
+    return partialAbsences?.reduce(
       (total, curr) => curr.totalAbsences + total,
       0,
     )
-  }, [])
+  }, [partialAbsences])
 
   const greaterAbsence = useMemo(() => {
-    return partialAbsences.reduce(
+    return partialAbsences?.reduce(
       (greater, curr) =>
         curr.totalAbsences > greater ? curr.totalAbsences : greater,
       0,
     )
-  }, [])
+  }, [partialAbsences])
 
   return (
     <div className="grid grid-cols-4 grid-rows-[repeat(2,min-content)] gap-4">
@@ -63,7 +66,7 @@ export default function AbsencesPage() {
             </TableHeader>
 
             <TableBody>
-              {partialAbsences.map((absences, idx) => (
+              {partialAbsences?.map((absences, idx) => (
                 <TableRow key={`absences-${idx}`}>
                   <TableCell>{absences.cod}</TableCell>
                   <TableCell>{absences.disciplineName}</TableCell>

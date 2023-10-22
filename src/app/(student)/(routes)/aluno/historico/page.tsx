@@ -1,3 +1,5 @@
+'use client'
+
 import { Check, Hourglass, X } from 'lucide-react'
 import {
   Table,
@@ -8,9 +10,11 @@ import {
   TableCell,
 } from '~/components/ui/table'
 import { cn } from '~/lib/utils'
-import { completeHistory } from './temp'
+import { useHistory } from '~/hooks/use-history'
 
 export default function HistoryPage() {
+  const { data: completeHistory } = useHistory()
+
   return (
     <Table>
       <TableHeader>
@@ -23,7 +27,7 @@ export default function HistoryPage() {
       </TableHeader>
 
       <TableBody>
-        {completeHistory.map((history) => (
+        {completeHistory?.map((history) => (
           <TableRow key={history.cod}>
             <TableCell>{history.cod}</TableCell>
             <TableCell>{history.disciplineName}</TableCell>
