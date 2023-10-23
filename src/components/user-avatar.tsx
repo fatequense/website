@@ -23,7 +23,7 @@ export const UserAvatar = forwardRef<
 
   return (
     <Avatar ref={ref} {...props}>
-      <AvatarImage src={profile?.photoUrl} />
+      <AvatarImage src={profile?.avatarUrl ?? profile?.photoUrl} />
       <AvatarFallback>{fallback?.toUpperCase()}</AvatarFallback>
     </Avatar>
   )
