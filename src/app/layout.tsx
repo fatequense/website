@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`antialiased ${sans.className}`}>
         <Providers>{children}</Providers>
-        <Toaster />
+        <Toaster richColors />
       </body>
     </html>
   )
