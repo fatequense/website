@@ -16,6 +16,7 @@ export const profileSchema = z.object({
   semestersAttended: z.number(),
   currentSemester: z.number(),
   photoUrl: z.string().url(),
+  avatarUrl: z.string().url().optional(),
   college: z.object({
     name: z.string(),
     courseName: z.string(),
