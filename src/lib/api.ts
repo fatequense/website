@@ -1,13 +1,13 @@
-type Schema<TData> = { parse: (data: unknown) => TData }
+import { url } from './utils'
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+type Schema<TData> = { parse: (data: unknown) => TData }
 
 export async function api<TData>(
   schema: Schema<TData>,
   route: string,
   options: RequestInit,
 ) {
-  const response = await fetch(new URL(route, BASE_URL), options)
+  const response = await fetch(url(route), options)
   const data = await response.json()
 
   return schema.parse(data)
