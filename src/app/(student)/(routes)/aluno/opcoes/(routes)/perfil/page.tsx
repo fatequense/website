@@ -1,16 +1,15 @@
 'use client'
 
-import { Button } from '~/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '~/components/ui/card'
 import { Input } from '~/components/ui/input'
 import { useProfile } from '~/hooks/use-profile'
+import { UpdateAvatarForm } from '../../_components/update-avatar-form'
 
 export default function OptionsProfile() {
   const { data: profile } = useProfile()
@@ -25,34 +24,15 @@ export default function OptionsProfile() {
         </p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Foto de perfil</CardTitle>
-          <CardDescription>
-            Coloque uma URL válida de uma imagem para servir como foto de perfil
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Input
-            defaultValue={profile?.photoUrl}
-            placeholder="ex. https://github.com/usuario.png"
-          />
-        </CardContent>
-        <CardFooter className="border-t p-6">
-          <Button>Salvar</Button>
-        </CardFooter>
-      </Card>
+      <UpdateAvatarForm profile={profile} />
+
       <Card>
         <CardHeader>
           <CardTitle>RA</CardTitle>
           <CardDescription>Seu Registro Acadêmico único</CardDescription>
         </CardHeader>
         <CardContent>
-          <Input
-            defaultValue={profile?.ra}
-            readOnly
-            className="text-muted-foreground"
-          />
+          <Input defaultValue={profile?.ra} readOnly />
         </CardContent>
       </Card>
       <Card>
@@ -63,11 +43,7 @@ export default function OptionsProfile() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Input
-            defaultValue={profile?.institutionalEmail}
-            readOnly
-            className="text-muted-foreground"
-          />
+          <Input defaultValue={profile?.institutionalEmail} readOnly />
         </CardContent>
       </Card>
     </div>
