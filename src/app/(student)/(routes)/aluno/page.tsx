@@ -7,15 +7,7 @@ import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { Skeleton } from '~/components/ui/skeleton'
 import { useProfile } from '~/hooks/use-profile'
-
-const todayClasses = [
-  { startsAt: '7:40', disciplineName: 'Laboratório de Banco de Dados' },
-  { startsAt: '7:40', disciplineName: 'Laboratório de Banco de Dados' },
-  { startsAt: '7:40', disciplineName: 'Laboratório de Banco de Dados' },
-  { startsAt: '7:40', disciplineName: 'Laboratório de Banco de Dados' },
-  { startsAt: '7:40', disciplineName: 'Laboratório de Banco de Dados' },
-  { startsAt: '7:40', disciplineName: 'Laboratório de Banco de Dados' },
-]
+import { TodaySchedule } from '../../_components/today-schedule'
 
 export default function StudentHome() {
   const { isLoading, data: profile } = useProfile()
@@ -112,19 +104,7 @@ export default function StudentHome() {
             <CardTitle className="text-sm">Aulas de hoje</CardTitle>
           </CardHeader>
           <CardContent>
-            <ol>
-              {todayClasses.map((item, idx) => (
-                <li key={`today-${idx}`} className="flex">
-                  <span className="text-muted-foreground text-xs">7:40</span>
-                  <div className="ml-2 pl-4 pb-4 relative before:absolute before:z-10 before:w-2 before:h-2 before:contents-[''] before:bg-secondary before:rounded-full before:left-0 before:-translate-x-1/2 after:absolute after:contents-[''] after:h-full after:w-[0.125rem] after:bg-secondary after:left-0 after:top-0 after:-translate-x-1/2">
-                    <span className="text-xs text-muted-foreground">
-                      IBD200
-                    </span>
-                    <p className="text-sm">Laboratório de Banco de Dados</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
+            <TodaySchedule />
           </CardContent>
         </Card>
       </div>
