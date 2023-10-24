@@ -3,6 +3,7 @@ import { Toaster } from 'sonner'
 import './globals.css'
 import { sans } from './fonts'
 import { Providers } from '../components/providers'
+import { TailwindIndicator } from '~/components/tailwind-indicator'
 
 export const metadata: Metadata = {
   title: {
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className={`antialiased ${sans.className}`}>
         <Providers>{children}</Providers>
         <Toaster richColors />
+        <TailwindIndicator />
       </body>
     </html>
   )
