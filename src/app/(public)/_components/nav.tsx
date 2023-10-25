@@ -1,7 +1,9 @@
 'use client'
 
-import { GraduationCap } from 'lucide-react'
 import Link from 'next/link'
+
+import { GraduationCap } from 'lucide-react'
+
 import { ThemeToggle } from '~/components/theme-toggle'
 import { Button } from '~/components/ui/button'
 
