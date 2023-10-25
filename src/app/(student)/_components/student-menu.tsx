@@ -1,10 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { User, Settings, Globe, Code, Github, LogOut } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 
 import { Button } from '~/components/ui/button'
-import { Separator } from '~/components/ui/separator'
 import {
   SheetTrigger,
   SheetContent,
@@ -14,12 +13,16 @@ import {
 import { UserAvatar } from '~/components/user-avatar'
 import { signOut } from 'next-auth/react'
 import { useProfile } from '~/hooks/use-profile'
+import { useState } from 'react'
+import { dashboardConfig } from '~/config/dashboard'
+import { cn } from '~/lib/utils'
 
 export function StudentMenu() {
+  const [open, setOpen] = useState(false)
   const { data: profile } = useProfile()
 
   return (
-    <Sheet>
+    <Sheet onOpenChange={setOpen} open={open}>
       <SheetTrigger>
         <UserAvatar />
       </SheetTrigger>
@@ -36,60 +39,29 @@ export function StudentMenu() {
         </SheetHeader>
 
         <div className="h-full mt-4 space-y-2">
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-muted-foreground pointer-events-none"
-            asChild
-          >
-            <Link href="#">
-              <User className="w-4 h-4 mr-2" />
-              <span>Perfil</span>
-            </Link>
-          </Button>
-          <Button variant="ghost" className="w-full justify-start" asChild>
-            <Link href="/aluno/opcoes">
-              <Settings className="w-4 h-4 mr-2" />
-              <span>Opções</span>
-            </Link>
-          </Button>
-
-          <Separator />
-
-          <Button variant="ghost" className="w-full justify-start" asChild>
-            <a
-              href="https://siga.cps.sp.gov.br/ALUNO/login.aspx"
-              target="_blank"
-              rel="noreferrer"
+          {dashboardConfig.studentNav.map((link) => (
+            <Button
+              key={link.label}
+              variant="ghost"
+              className={cn(
+                'w-full justify-start',
+                link.disabled && 'pointer-events-none text-muted-foreground',
+              )}
+              asChild
             >
-              <Globe className="w-4 h-4 mr-2" />
-              <span>SIGA</span>
-            </a>
-          </Button>
-
-          <Separator />
-
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-muted-foreground pointer-events-none"
-            asChild
-          >
-            <Link href="#">
-              <Code className="w-4 h-4 mr-2" />
-              <span>Desenvolvedor</span>
-            </Link>
-          </Button>
-
-          <Button variant="ghost" className="w-full justify-start" asChild>
-            <a
-              href="https://github.com/fatequense/website"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Github className="w-4 h-4 mr-2" />
-              <span>GitHub</span>
-            </a>
-          </Button>
-          <Separator />
+              {link.external ? (
+                <a href={link.href} target="_blank" rel="noreferrer">
+                  <link.icon className="w-4 h-4 mr-2" />
+                  {link.label}
+                </a>
+              ) : (
+                <Link href={link.href}>
+                  <link.icon className="w-4 h-4 mr-2" />
+                  {link.label}
+                </Link>
+              )}
+            </Button>
+          ))}
 
           <Button
             variant="destructive"

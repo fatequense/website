@@ -1,5 +1,8 @@
+'use client'
+
 import { GraduationCap, Menu } from 'lucide-react'
 import Link from 'next/link'
+import { useState } from 'react'
 import { Button } from '~/components/ui/button'
 import {
   SheetTrigger,
@@ -11,8 +14,10 @@ import { dashboardConfig } from '~/config/dashboard'
 import { cn } from '~/lib/utils'
 
 export function PagesMenu() {
+  const [open, setOpen] = useState(false)
+
   return (
-    <Sheet>
+    <Sheet onOpenChange={setOpen} open={open}>
       <SheetTrigger asChild>
         <Button variant="outline" size="icon">
           <Menu className="w-4 h-4" />
@@ -34,6 +39,7 @@ export function PagesMenu() {
                 'w-full justify-start',
                 link.disabled && 'pointer-events-none text-muted-foreground',
               )}
+              onClick={() => setOpen(false)}
               asChild
             >
               <Link href={link.disabled ? '#' : link.href}>
