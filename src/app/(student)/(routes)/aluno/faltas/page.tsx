@@ -50,38 +50,33 @@ export default function AbsencesPage() {
         </CardContent>
       </Card>
 
-      <Card className="col-start-1 col-end-5 row-start-2 row-span-full">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm">Faltas parciais</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Código</TableHead>
-                <TableHead>Disciplina</TableHead>
-                <TableHead className="text-center">Faltas</TableHead>
-                <TableHead className="text-center">Presenças</TableHead>
-              </TableRow>
-            </TableHeader>
+      <div className="col-span-full">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Código</TableHead>
+              <TableHead>Disciplina</TableHead>
+              <TableHead className="text-center">Faltas</TableHead>
+              <TableHead className="text-center">Presenças</TableHead>
+            </TableRow>
+          </TableHeader>
 
-            <TableBody>
-              {partialAbsences?.map((absences, idx) => (
-                <TableRow key={`absences-${idx}`}>
-                  <TableCell>{absences.cod}</TableCell>
-                  <TableCell>{absences.disciplineName}</TableCell>
-                  <TableCell className="text-center">
-                    {absences.totalAbsences}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {absences.totalPresences}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+          <TableBody>
+            {partialAbsences?.map((absences, idx) => (
+              <TableRow key={`absences-${idx}`}>
+                <TableCell>{absences.cod}</TableCell>
+                <TableCell>{absences.disciplineName}</TableCell>
+                <TableCell className="text-center">
+                  {absences.totalAbsences}
+                </TableCell>
+                <TableCell className="text-center">
+                  {absences.totalPresences}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   )
 }
