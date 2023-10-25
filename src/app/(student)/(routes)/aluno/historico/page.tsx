@@ -11,9 +11,12 @@ import {
 } from '~/components/ui/table'
 import { cn } from '~/lib/utils'
 import { useHistory } from '~/hooks/use-history'
+import { Skeleton } from '~/components/ui/skeleton'
 
 export default function HistoryPage() {
   const { data: completeHistory } = useHistory()
+
+  const isLoading = !completeHistory
 
   return (
     <Table>
@@ -27,35 +30,55 @@ export default function HistoryPage() {
       </TableHeader>
 
       <TableBody>
-        {completeHistory?.map((history) => (
-          <TableRow key={history.cod}>
-            <TableCell>{history.cod}</TableCell>
-            <TableCell>{history.disciplineName}</TableCell>
-            <TableCell className="text-center">{history.finalGrade}</TableCell>
-            <TableCell>
-              <div
-                className={cn(
-                  'mx-auto p-1 w-fit rounded-full',
-                  history.isApproved && 'bg-green-900/10 text-green-400',
-                  !history.isApproved &&
-                    history.description !== 'Em Curso' &&
-                    'bg-red-900/10 text-red-400',
-                  history.description === 'Em Curso' &&
-                    'bg-yellow-900/10 text-yellow-400',
-                )}
-                aria-label={history.isApproved ? 'Aprovado' : 'Reprovado'}
-              >
-                {history.isApproved ? (
-                  <Check className="w-4 h-4" />
-                ) : history.description === 'Em Curso' ? (
-                  <Hourglass className="w-4 h-4" />
-                ) : (
-                  <X className="w-4 h-4" />
-                )}
-              </div>
-            </TableCell>
-          </TableRow>
-        ))}
+        {isLoading &&
+          Array.from({ length: 10 }).map((_, idx) => (
+            <TableRow key={`skeleton-${idx}`}>
+              <TableCell>
+                <Skeleton className="h-5 w-16" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="h-5 w-64" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="h-5 w-5 mx-auto" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="h-5 w-5 mx-auto" />
+              </TableCell>
+            </TableRow>
+          ))}
+        {!isLoading &&
+          completeHistory?.map((history) => (
+            <TableRow key={history.cod}>
+              <TableCell>{history.cod}</TableCell>
+              <TableCell>{history.disciplineName}</TableCell>
+              <TableCell className="text-center">
+                {history.finalGrade}
+              </TableCell>
+              <TableCell>
+                <div
+                  className={cn(
+                    'mx-auto p-1 w-fit rounded-full',
+                    history.isApproved && 'bg-green-900/10 text-green-400',
+                    !history.isApproved &&
+                      history.description !== 'Em Curso' &&
+                      'bg-red-900/10 text-red-400',
+                    history.description === 'Em Curso' &&
+                      'bg-yellow-900/10 text-yellow-400',
+                  )}
+                  aria-label={history.isApproved ? 'Aprovado' : 'Reprovado'}
+                >
+                  {history.isApproved ? (
+                    <Check className="w-4 h-4" />
+                  ) : history.description === 'Em Curso' ? (
+                    <Hourglass className="w-4 h-4" />
+                  ) : (
+                    <X className="w-4 h-4" />
+                  )}
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
       </TableBody>
     </Table>
   )

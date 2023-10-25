@@ -12,9 +12,12 @@ import {
 } from '~/components/ui/table'
 import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card'
 import { usePartialAbsences } from '~/hooks/use-absences'
+import { Skeleton } from '~/components/ui/skeleton'
 
 export default function AbsencesPage() {
   const { data: partialAbsences } = usePartialAbsences()
+
+  const isLoading = !partialAbsences
 
   const totalAbsences = useMemo(() => {
     return partialAbsences?.reduce(
@@ -38,7 +41,11 @@ export default function AbsencesPage() {
           <CardTitle className="text-sm">Total de Faltas</CardTitle>
         </CardHeader>
         <CardContent>
-          <span className="text-2xl font-bold">{totalAbsences}</span>
+          {isLoading ? (
+            <Skeleton className="h-7 w-10" />
+          ) : (
+            <span className="text-2xl font-bold">{totalAbsences}</span>
+          )}
         </CardContent>
       </Card>
       <Card className="col-start-3 col-span-2">
@@ -46,7 +53,11 @@ export default function AbsencesPage() {
           <CardTitle className="text-sm">Maior falta</CardTitle>
         </CardHeader>
         <CardContent>
-          <span className="text-2xl font-bold">{greaterAbsence}</span>
+          {isLoading ? (
+            <Skeleton className="h-7 w-10" />
+          ) : (
+            <span className="text-2xl font-bold">{greaterAbsence}</span>
+          )}
         </CardContent>
       </Card>
 
@@ -62,18 +73,36 @@ export default function AbsencesPage() {
           </TableHeader>
 
           <TableBody>
-            {partialAbsences?.map((absences, idx) => (
-              <TableRow key={`absences-${idx}`}>
-                <TableCell>{absences.cod}</TableCell>
-                <TableCell>{absences.disciplineName}</TableCell>
-                <TableCell className="text-center">
-                  {absences.totalAbsences}
-                </TableCell>
-                <TableCell className="text-center">
-                  {absences.totalPresences}
-                </TableCell>
-              </TableRow>
-            ))}
+            {isLoading &&
+              Array.from({ length: 6 }).map((_, idx) => (
+                <TableRow key={`skeleton-${idx}`}>
+                  <TableCell>
+                    <Skeleton className="h-5 w-16" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-5 w-64" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-5 w-5 mx-auto" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-5 w-5 mx-auto" />
+                  </TableCell>
+                </TableRow>
+              ))}
+            {!isLoading &&
+              partialAbsences?.map((absences, idx) => (
+                <TableRow key={`absences-${idx}`}>
+                  <TableCell>{absences.cod}</TableCell>
+                  <TableCell>{absences.disciplineName}</TableCell>
+                  <TableCell className="text-center">
+                    {absences.totalAbsences}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {absences.totalPresences}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </div>

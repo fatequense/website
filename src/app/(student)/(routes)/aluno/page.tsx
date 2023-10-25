@@ -10,7 +10,9 @@ import { useProfile } from '~/hooks/use-profile'
 import { TodaySchedule } from '../../_components/today-schedule'
 
 export default function StudentHome() {
-  const { isLoading, data: profile } = useProfile()
+  const { data: profile } = useProfile()
+
+  const isLoading = !profile
 
   return (
     <div className="h-full">

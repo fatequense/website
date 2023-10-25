@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
+import { Skeleton } from '~/components/ui/skeleton'
 
 import {
   TableHeader,
@@ -14,6 +15,8 @@ import { usePartialGrades } from '~/hooks/use-partial-grade'
 
 export default function GradesPage() {
   const { data: partialGrades } = usePartialGrades()
+
+  const isLoading = !partialGrades
 
   const _partialGrades = useMemo(() => {
     return partialGrades?.map((grade) => {
@@ -33,38 +36,58 @@ export default function GradesPage() {
   }, [partialGrades])
 
   return (
-    <div className="grid grid-cols-4 grid-rows-[repeat(2,min-content)] gap-4">
-      <div className="col-start-1 col-span-full row-start-1 row-span-full">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Código</TableHead>
-              <TableHead>Disciplina</TableHead>
-              <TableHead className="text-center">P1</TableHead>
-              <TableHead className="text-center">P2</TableHead>
-              <TableHead className="text-center">P3</TableHead>
-              <TableHead className="text-center">Média</TableHead>
-            </TableRow>
-          </TableHeader>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Código</TableHead>
+          <TableHead>Disciplina</TableHead>
+          <TableHead className="text-center">P1</TableHead>
+          <TableHead className="text-center">P2</TableHead>
+          <TableHead className="text-center">P3</TableHead>
+          <TableHead className="text-center">Média</TableHead>
+        </TableRow>
+      </TableHeader>
 
-          <TableBody>
-            {_partialGrades?.map((grade, idx) => (
-              <TableRow key={`grades-${idx}`}>
-                <TableCell>{grade.cod}</TableCell>
-                <TableCell>{grade.disciplineName}</TableCell>
-                {grade.examsDates.map((exam, i) => (
-                  <TableCell key={`${grade.cod}-${i}`} className="text-center">
-                    {exam ? exam.grade : '-'}
-                  </TableCell>
-                ))}
-                <TableCell className="text-center">
-                  {grade.averageGrade}
+      <TableBody>
+        {isLoading &&
+          Array.from({ length: 6 }).map((_, idx) => (
+            <TableRow key={`skeleton-${idx}`}>
+              <TableCell>
+                <Skeleton className="h-5 w-16" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="h-5 w-64" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="h-5 w-5 mx-auto" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="h-5 w-5 mx-auto" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="h-5 w-5 mx-auto" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="h-5 w-5 mx-auto" />
+              </TableCell>
+            </TableRow>
+          ))}
+        {!isLoading &&
+          _partialGrades?.map((grade, idx) => (
+            <TableRow key={`grades-${idx}`}>
+              <TableCell>{grade.cod}</TableCell>
+              <TableCell>{grade.disciplineName}</TableCell>
+              {grade.examsDates.map((exam, i) => (
+                <TableCell key={`${grade.cod}-${i}`} className="text-center">
+                  {exam ? exam.grade : '-'}
                 </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-    </div>
+              ))}
+              <TableCell className="text-center">
+                {grade.averageGrade}
+              </TableCell>
+            </TableRow>
+          ))}
+      </TableBody>
+    </Table>
   )
 }

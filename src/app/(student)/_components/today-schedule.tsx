@@ -11,7 +11,9 @@ function formatHour(date: string) {
 }
 
 export function TodaySchedule() {
-  const { isLoading, data: schedules } = useSchedule()
+  const { data: schedules } = useSchedule()
+
+  const isLoading = !schedules
 
   const todayWeek = new Date().getDay()
   const todaySchedules = todayWeek > 0 ? schedules?.at(todayWeek - 1) : []
