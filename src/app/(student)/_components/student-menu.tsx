@@ -47,6 +47,7 @@ export function StudentMenu() {
                 'w-full justify-start',
                 link.disabled && 'pointer-events-none text-muted-foreground',
               )}
+              onClick={() => setOpen(false)}
               asChild
             >
               {link.external ? (
