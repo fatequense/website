@@ -23,12 +23,12 @@ export function ApparenceThemeChange() {
       </CardHeader>
       <CardContent>
         <RadioGroup defaultValue={resolvedTheme} onValueChange={setTheme}>
-          <div className="flex gap-6">
+          <div className="flex flex-col sm:flex-row gap-6">
             <Label htmlFor="light" className="cursor-pointer text-center">
               <RadioGroupItem id="light" value="light" className="hidden" />
               <div
                 className={cn(
-                  'w-48 space-y-2 p-2 bg-[#ecedef] rounded-md ring-2 ring-offset-4 ring-secondary ring-offset-background',
+                  'w-full sm:w-48 space-y-2 p-2 bg-[#ecedef] rounded-md ring-2 ring-offset-4 ring-secondary ring-offset-background',
                   resolvedTheme === 'light' && 'ring-primary',
                 )}
               >
@@ -54,7 +54,7 @@ export function ApparenceThemeChange() {
               <RadioGroupItem id="dark" value="dark" className="hidden" />
               <div
                 className={cn(
-                  'w-48 space-y-2 p-2 bg-[#020617] rounded-md ring-2 ring-offset-4 ring-secondary ring-offset-background',
+                  'w-full sm:w-48 space-y-2 p-2 bg-[#020617] rounded-md ring-2 ring-offset-4 ring-secondary ring-offset-background',
                   resolvedTheme === 'dark' && 'ring-primary',
                 )}
               >
