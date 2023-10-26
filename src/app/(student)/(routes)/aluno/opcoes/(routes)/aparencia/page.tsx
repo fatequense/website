@@ -1,5 +1,3 @@
-'use client'
-
 import { ApparenceThemeChange } from '../../_components/apparence-theme-change'
 
 export default function OptionsProfile() {
