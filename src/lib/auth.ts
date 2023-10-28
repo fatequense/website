@@ -4,6 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import { api } from './api'
 import { profileSchema } from './validations/profile'
 import { authSchema, loginResponseSchema } from './validations/auth'
+import { url } from './utils'
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -21,23 +22,28 @@ export const authOptions: NextAuthOptions = {
       name: 'credentials',
       credentials: {},
       async authorize(credentials) {
-        const { username, password } = authSchema.parse(credentials)
+        const parsedCredentials = authSchema.safeParse(credentials)
 
-        try {
-          const { token } = await api(loginResponseSchema, '/api/auth/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-          })
+        if (!parsedCredentials.success) return null
 
-          return { id: '', accessToken: token }
-        } catch (e) {
-          console.error(e)
+        const res = await fetch(url('/api/auth/login'), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: parsedCredentials.data.username,
+            password: parsedCredentials.data.password,
+          }),
+        })
 
-          return null
-        }
+        if (!res.ok) return null
+
+        const parsedData = loginResponseSchema.safeParse(await res.json())
+
+        if (!parsedData.success) return null
+
+        return { id: '', accessToken: parsedData.data.token }
       },
     }),
   ],
@@ -63,7 +69,7 @@ export const authOptions: NextAuthOptions = {
         ra: profile.ra,
         name: profile.name,
         email: profile.institutionalEmail,
-        picture: profile.photoUrl,
+        picture: profile.avatarUrl ?? profile.photoUrl,
       }
     },
 
