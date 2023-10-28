@@ -94,7 +94,7 @@ export default function StudentHome() {
                   adicione uma nova atividade se houver.
                 </p>
               </div>
-              <Button>
+              <Button disabled>
                 <PlusIcon className="w-4 h-4 mr-2" />
                 Adicionar nova atividade
               </Button>
