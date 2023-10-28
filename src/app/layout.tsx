@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Toaster } from 'sonner'
 import './globals.css'
 import { sans } from './fonts'
@@ -6,6 +6,12 @@ import { Providers } from '../components/providers'
 import { TailwindIndicator } from '~/components/tailwind-indicator'
 import { siteConfig } from '~/config/site'
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
+  ],
+}
 export const metadata: Metadata = {
   title: {
     default: `${siteConfig.name}`,
@@ -19,10 +25,6 @@ export const metadata: Metadata = {
     },
   ],
   creator: 'SadS4ndWiCh',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
-  ],
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
