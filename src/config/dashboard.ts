@@ -41,7 +41,6 @@ export const dashboardConfig = {
     {
       label: 'Histórico em Grade',
       href: '/aluno/historico-grade',
-      disabled: true,
       icon: SquareStack,
     },
   ],
