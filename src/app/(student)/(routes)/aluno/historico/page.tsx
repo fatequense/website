@@ -1,6 +1,7 @@
 'use client'
 
-import { Check, Hourglass, X } from 'lucide-react'
+import { z } from 'zod'
+
 import {
   Table,
   TableHeader,
@@ -9,14 +10,25 @@ import {
   TableBody,
   TableCell,
 } from '~/components/ui/table'
-import { cn } from '~/lib/utils'
 import { useHistory } from '~/hooks/use-history'
 import { Skeleton } from '~/components/ui/skeleton'
+import { historySchema } from '~/lib/validations/history'
+import { DisciplineStatus } from '~/app/(student)/_components/discipline-status'
 
 export default function HistoryPage() {
   const { data: completeHistory } = useHistory()
 
   const isLoading = !completeHistory
+
+  function getHistoryStatus(history: z.infer<typeof historySchema>[number]) {
+    return history.isApproved
+      ? 'approved'
+      : !history.isApproved && history.description !== 'Em Curso'
+      ? 'dismissed'
+      : history.description === 'Em Curso'
+      ? 'attending'
+      : 'not-attended'
+  }
 
   return (
     <Table>
@@ -55,27 +67,8 @@ export default function HistoryPage() {
               <TableCell className="text-center">
                 {history.finalGrade}
               </TableCell>
-              <TableCell>
-                <div
-                  className={cn(
-                    'mx-auto p-1 w-fit rounded-full',
-                    history.isApproved && 'bg-green-900/10 text-green-400',
-                    !history.isApproved &&
-                      history.description !== 'Em Curso' &&
-                      'bg-red-900/10 text-red-400',
-                    history.description === 'Em Curso' &&
-                      'bg-yellow-900/10 text-yellow-400',
-                  )}
-                  aria-label={history.isApproved ? 'Aprovado' : 'Reprovado'}
-                >
-                  {history.isApproved ? (
-                    <Check className="w-4 h-4" />
-                  ) : history.description === 'Em Curso' ? (
-                    <Hourglass className="w-4 h-4" />
-                  ) : (
-                    <X className="w-4 h-4" />
-                  )}
-                </div>
+              <TableCell className="flex justify-center">
+                <DisciplineStatus status={getHistoryStatus(history)} />
               </TableCell>
             </TableRow>
           ))}
