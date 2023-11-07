@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Toaster } from 'sonner'
+import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 import { sans } from './fonts'
 import { Providers } from '../components/providers'
@@ -52,6 +53,7 @@ export default function RootLayout({
         <Providers>{children}</Providers>
         <Toaster richColors />
         <TailwindIndicator />
+        <Analytics />
       </body>
     </html>
   )
