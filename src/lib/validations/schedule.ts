@@ -10,3 +10,6 @@ export const scheduleSchema = z.array(
     }),
   ),
 )
+
+export type Schedule = z.infer<typeof scheduleSchema>
+export type Lesson = Schedule[number][number]
