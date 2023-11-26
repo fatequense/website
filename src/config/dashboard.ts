@@ -30,7 +30,6 @@ export const dashboardConfig = {
     {
       label: 'Horários',
       href: '/aluno/horarios',
-      disabled: true,
       icon: CalendarDays,
     },
     {
