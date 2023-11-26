@@ -7,7 +7,6 @@ import {
   Settings,
   SquareStack,
   Star,
-  User,
 } from 'lucide-react'
 
 export const dashboardConfig = {
