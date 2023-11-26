@@ -4,12 +4,25 @@ import { CubeIcon } from '@radix-ui/react-icons'
 import { CreateActivityForm } from '~/components/forms/create-activity-form'
 import { useActivities } from '~/hooks/use-activities'
 
+function formatDateTime(datetime: string) {
+  return new Intl.DateTimeFormat('pt-BR', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(new Date(datetime))
+}
+
 export function Activities() {
   const { data: activities } = useActivities()
 
-  console.log(activities)
+  const pendingActivities = activities?.filter((activity) => {
+    return new Date(activity.untilAt) > new Date()
+  })
 
-  if (!activities || activities?.length === 0)
+  if (
+    !activities ||
+    activities?.length === 0 ||
+    pendingActivities?.length === 0
+  )
     return (
       <div className="flex flex-col items-center space-y-2">
         <div className="p-4 bg-fuchsia-900/10 text-fuchsia-600 rounded-md">
@@ -29,10 +42,16 @@ export function Activities() {
 
   return (
     <div>
-      {activities?.map((activity) => (
+      {pendingActivities?.map((activity) => (
         <div key={activity.id}>
           <p>{activity.title}</p>
-          <p>{activity.description}</p>
+          <p className="text-sm line-clamp-1">{activity.description}</p>
+
+          <div className="flex items-center space-x-2 mt-1 text-sm text-muted-foreground">
+            <span>{activity.disciplineCode}</span>
+            <span>&bull;</span>
+            <time>{formatDateTime(activity.untilAt)}</time>
+          </div>
         </div>
       ))}
     </div>
