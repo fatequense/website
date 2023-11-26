@@ -45,12 +45,6 @@ export const dashboardConfig = {
   ],
   studentNav: [
     {
-      label: 'Perfil',
-      href: '/aluno/perfil',
-      disabled: true,
-      icon: User,
-    },
-    {
       label: 'Opções',
       href: '/aluno/opcoes',
       icon: Settings,
