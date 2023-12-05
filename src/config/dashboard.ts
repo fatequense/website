@@ -4,12 +4,28 @@ import {
   GalleryVerticalEnd,
   Globe,
   LayoutGrid,
+  type LucideIcon,
   Settings,
   SquareStack,
   Star,
 } from 'lucide-react'
 
-export const dashboardConfig = {
+type DashboardConfig = {
+  sidebarNav: {
+    label: string
+    href: string
+    icon: LucideIcon
+    disabled?: boolean
+  }[]
+  studentNav: {
+    label: string
+    href: string
+    external?: true
+    icon: LucideIcon
+  }[]
+}
+
+export const dashboardConfig: DashboardConfig = {
   sidebarNav: [
     {
       label: 'Dashboard',
