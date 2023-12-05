@@ -37,12 +37,13 @@ export function PagesMenu() {
               variant="ghost"
               className={cn(
                 'w-full justify-start',
-                link.disabled && 'pointer-events-none text-muted-foreground',
+                // link.disabled && 'pointer-events-none text-muted-foreground',
               )}
               onClick={() => setOpen(false)}
               asChild
             >
-              <Link href={link.disabled ? '#' : link.href}>
+              {/* <Link href={link.disabled ? '#' : link.href}> */}
+              <Link href={link.href}>
                 <link.icon className="w-4 h-4 mr-2" />
                 {link.label}
               </Link>
