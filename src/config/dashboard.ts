@@ -21,6 +21,7 @@ type DashboardConfig = {
     label: string
     href: string
     external?: true
+    disabled?: boolean
     icon: LucideIcon
   }[]
 }
