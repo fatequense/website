@@ -7,4 +7,4 @@ Fatequense é uma plataforma feita para os estudantes da faculdade Fatec consegu
 
 ## 🎯 Objetivo
 
-Esse projeto tem como objetivo ser uma alternativa a plataforma original com uma interface mais moderna e com uma experiência mais agradável ao estudante.
+Esse projeto tem como objetivo ser uma alternativa a plataforma original (SIGA) com uma interface mais moderna e com uma experiência mais agradável ao estudante.
