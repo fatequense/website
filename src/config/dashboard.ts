@@ -4,13 +4,29 @@ import {
   GalleryVerticalEnd,
   Globe,
   LayoutGrid,
+  type LucideIcon,
   Settings,
   SquareStack,
   Star,
-  User,
 } from 'lucide-react'
 
-export const dashboardConfig = {
+type DashboardConfig = {
+  sidebarNav: {
+    label: string
+    href: string
+    icon: LucideIcon
+    disabled?: boolean
+  }[]
+  studentNav: {
+    label: string
+    href: string
+    external?: true
+    disabled?: boolean
+    icon: LucideIcon
+  }[]
+}
+
+export const dashboardConfig: DashboardConfig = {
   sidebarNav: [
     {
       label: 'Dashboard',
@@ -30,7 +46,6 @@ export const dashboardConfig = {
     {
       label: 'Horários',
       href: '/aluno/horarios',
-      disabled: true,
       icon: CalendarDays,
     },
     {
@@ -45,12 +60,6 @@ export const dashboardConfig = {
     },
   ],
   studentNav: [
-    {
-      label: 'Perfil',
-      href: '/aluno/perfil',
-      disabled: true,
-      icon: User,
-    },
     {
       label: 'Opções',
       href: '/aluno/opcoes',
